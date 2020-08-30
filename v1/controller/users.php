@@ -14,6 +14,17 @@ catch (PDOException $ex)
     $response->returnResponseError(500, "DB connection error");
 }
 
+
+// handle options request method for CORS
+if ($_SERVER['REQUEST_METHOD'] !== "OPTIONS")
+{
+    header('Access-Control-Allow-Methods: POST, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Max-Age: 86400');
+    $response = new Response();
+    $response->returnResponseSuccess(200, []);
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== "POST")
 {
     $response = new Response();
