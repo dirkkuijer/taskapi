@@ -38,7 +38,16 @@ if (array_key_exists("sessionid", $_GET))
     }
     
     $accesstoken = $_SERVER['HTTP_AUTHORIZATION'];
-    
+    // handle options request method for CORS
+if ($_SERVER['REQUEST_METHOD'] === "OPTIONS")
+{
+    header('Access-Control-Allow-Methods: POST, DELETE, PATCH, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Max-Age: 86400');
+    $response = new Response();
+    $response->returnResponseSuccess(200, []);
+}
+
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
     {   
         try

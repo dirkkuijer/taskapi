@@ -17,17 +17,6 @@ catch (PDOException $ex)
     $response->returnResponseError(500, "No DB connection");
 }
 
-// if (array_key_exists("taskid", $_GET)) 
-// {
-//     $taskid = $_GET['taskid'];
-
-//     if ($taskid == '' || !is_numeric($taskid))
-//     {
-//         $response = new Response();
-//         $response->returnResponseError(400, "Task id cannot be blank or must be nummeric");
-//     }
-    
-    // begin auth script
     
     if (!isset($_SERVER['HTTP_AUTHORIZATION']) || strlen($_SERVER['HTTP_AUTHORIZATION']) < 1)
     {
@@ -104,6 +93,15 @@ if (array_key_exists("taskid",$_GET)) {
         $response->send();
         exit;
     }
+    // handle options request method for CORS
+if ($_SERVER['REQUEST_METHOD'] === "OPTIONS")
+{
+    header('Access-Control-Allow-Methods: POST, GET, DELETE OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+    header('Access-Control-Max-Age: 86400');
+    $response = new Response();
+    $response->returnResponseSuccess(200, []);
+}
     if ($_SERVER['REQUEST_METHOD'] === 'GET')
     {
         try
