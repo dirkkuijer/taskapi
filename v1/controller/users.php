@@ -16,7 +16,7 @@ catch (PDOException $ex)
 
 
 // handle options request method for CORS
-if ($_SERVER['REQUEST_METHOD'] !== "OPTIONS")
+if ($_SERVER['REQUEST_METHOD'] === "OPTIONS")
 {
     header('Access-Control-Allow-Methods: POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type');
